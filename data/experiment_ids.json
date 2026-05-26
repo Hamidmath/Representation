@@ -1,0 +1,44 @@
+{
+  "_comment": "Fixed shape IDs used in the experiments reported in the paper (Rotation-Invariant Vectorized Shape Representations).",
+
+  "clustering_experiment": {
+    "description": "Clustering accuracy vs discretization parameter m. For each seed set, 10 distinct fish IDs are picked, and 9 random-rotation copies of each are added to form a 100-shape collection. k-means with k=10 is run on the rotation-invariant sketch for m in [8, 16, 32, 48, 64, 80, 96, 128, 256, 512, 1024]. The curve in the paper is the mean +/- 1 std band over the 6 trials below.",
+    "seed_sets": {
+      "rotatedSampleByArea0": [51, 76, 99, 141, 364, 549, 639, 641, 765, 1026],
+      "rotatedSampleByArea1": [308, 341, 409, 850, 908, 909, 963, 1014, 1026, 1100],
+      "rotatedSampleByArea2": [89, 120, 215, 295, 313, 347, 477, 524, 839, 1027],
+      "rotatedSampleByArea3": [136, 190, 210, 213, 537, 558, 564, 820, 860, 1075],
+      "rotatedSampleByArea4": [50, 446, 479, 604, 802, 833, 943, 998, 1013, 1051],
+      "rotatedSampleByArea5": [17, 22, 301, 354, 394, 498, 557, 582, 643, 924]
+    },
+    "_seed_note": "These are the chosen_shapes lists baked into each data/rotatedSampleByArea*.json file. The rotation angles themselves were drawn uniformly at random from [0, 2*pi). To regenerate a fresh trial with new IDs / angles, edit chosen_shapes in src/sampleRotatedVersion.py and rerun."
+  },
+
+  "knn_experiment": {
+    "description": "5-NN retrieval over all 1100 SQUID fish using the m=128 star-shaped signature.",
+    "query_indices": [102, 205, 309, 412, 518, 623, 734, 845, 956, 1070],
+    "paper_figure_queries": [518, 734, 1070]
+  },
+
+  "shape_table_figure": {
+    "description": "4x6 grid of fish outlines used in Figure 3 of the paper (shape_table_4x6.pdf).",
+    "shape_ids": [
+      [7, 17, 20, 38, 42, 46],
+      [51, 57, 62, 75, 95, 110],
+      [157, 159, 470, 517, 527, 528],
+      [534, 539, 577, 617, 643, 672]
+    ]
+  },
+
+  "resolution_figure": {
+    "description": "Single fish used to illustrate the effect of discretization m = 36, 120, 360 (Figure 1, kk102_triple_styled.pdf).",
+    "shape_id": 102,
+    "m_values": [36, 120, 360]
+  },
+
+  "roc_figure": {
+    "description": "Single fish used to illustrate the Reverse-of-Complement operation (Figure 2, kk53_60_styled_COMBINED.pdf).",
+    "shape_id": 53,
+    "m": 60
+  }
+}

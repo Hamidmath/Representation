@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.Python
+venv/
+.venv/
+env/
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Build artefacts produced by the pipeline -- regenerated from data/SQUID + data/ExtractedFromGifs
+data/combinedPts.json
+data/combinedPtsNormalized.json
+data/combinedPtsNormalizedByArea.json
+data/starShaped_signatures*.json
+data/euclideanStarSignatures*.json
+data/rotatedSample*.json
+data/rotatedSampleByArea*.json
+
+# Figure / report outputs
+figures/*.png
+figures/*.pdf
+figures/*.csv
+reports/
