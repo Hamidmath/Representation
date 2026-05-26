@@ -1,20 +1,16 @@
-# Rotation-Invariant Vectorized Shape Representations &mdash; SQUID Experiments (Non-Star Branch)
+# Rotation-Invariant Vectorized Shape Representations &mdash; Non-Star (Annulus) Pipeline
 
-Companion code to the paper
-**_Rotation-Invariant Vectorized Shape Representations_**
-by Hamid Shafieasl and Jeff M. Phillips.
+The **non-star (annulus) extension** of the rotation-invariant signature.
+Instead of representing each shape by a single radial function `f: S^m -> R`
+(which is only valid for star-shaped objects), every shape is sliced into `n`
+concentric annuli and a `0/1` indicator matrix `B in {0,1}^(n_sample x n)` is
+built, where entry `B[j, i]` is `1` iff the shape has any point in the `i`-th
+annulus and the `j`-th angular wedge. The rotation-invariant signature is then
+computed column-wise on this matrix and the columns are stacked into a single
+feature vector for downstream k-NN / clustering.
 
-This branch contains the **non-star (annulus) extension**. Instead of representing
-each shape by a single radial function `f: S^m -> R` (which is only valid for
-star-shaped objects), we slice every shape into `n` concentric annuli and build
-a `0/1` indicator matrix `B in {0,1}^(n_sample x n)` where entry `B[j, i]` is
-`1` iff the shape has any point in the `i`-th annulus and the `j`-th angular
-wedge. The rotation-invariant signature is then computed column-wise on this
-matrix and the columns are stacked into a single vector for downstream kNN /
-clustering.
-
-The corresponding **star-shaped** pipeline (which is the one the paper's
-experiments use) lives on the `star` branch.
+The companion **star-shaped** pipeline (which is the one that ships with
+prebuilt headline figures) lives on the `star` branch.
 
 <p align="center">
   <img src="docs/annulus_demo.png" alt="Annulus decomposition for non-star shapes" width="320">
@@ -27,21 +23,19 @@ experiments use) lives on the `star` branch.
 ```
 .
 |-- data/
-|   |-- SQUID/               # raw upstream SQUID dataset (1100 fish: .gif + .pts)
-|   |-- ExtractedFromGifs/   # boundary points + visualisations recovered from the .gif files
-|   `-- experiment_ids.json  # shape IDs used in the kNN demo
-|-- src/                     # pipeline scripts (non-star + shared preprocessing)
-|-- docs/                    # static images shown in this README
+|   |-- SQUID/               raw SQUID dataset (1100 fish: .gif + .pts)
+|   |-- ExtractedFromGifs/   boundary points + visualisations recovered from the .gif files
+|   `-- experiment_ids.json  shape IDs used in the kNN demo
+|-- src/                     pipeline scripts (non-star + shared preprocessing)
+|-- docs/                    static images used in this README
 `-- README.md
 ```
 
-After running the pipeline you will also see:
+After running the pipeline the following files appear (all git-ignored):
 
-- `data/combinedPts.json`, `data/combinedPtsNormalizedByArea.json` &mdash; cached vertex data;
-- `data/nonstarShaped_signatures128ByArea.json`, `data/euclideanNonStarSignatures128ByArea.json` &mdash; cached signatures and distances;
-- `reports/knn_EuclideanNonStar/<query_id>/` &mdash; per-query 5-NN PNGs.
-
-These outputs are git-ignored.
+- `data/combinedPts.json`, `data/combinedPtsNormalizedByArea.json` &mdash; cached vertex data
+- `data/nonstarShaped_signatures128ByArea.json`, `data/euclideanNonStarSignatures128ByArea.json` &mdash; cached signatures and distances
+- `reports/knn_EuclideanNonStar/<query_id>/` &mdash; per-query 5-NN PNGs
 
 ---
 
@@ -80,8 +74,8 @@ B   =   1 1 1 1 1 1 1 1
         1 0 0 1 1 0 0 1
 ```
 
-We then apply the same FFT-based rotation-invariant signature column by
-column, and concatenate the columns into a single feature vector. The
+The same FFT-based rotation-invariant signature is then applied column by
+column, and the columns are concatenated into a single feature vector. The
 Euclidean distance between these vectors gives a rotation-invariant
 dissimilarity that also works for non-star objects.
 
@@ -99,7 +93,7 @@ dissimilarity that also works for non-star objects.
 | 6 | `src/nonstar.py`                       | Stand-alone helper exposing the same annulus signature and a few weighted angular-distance variants.                  |
 | 7 | `src/euclideanOfNonStarSignatures.py`  | Computes the 1100 x 1100 pairwise Euclidean distance matrix between non-star signatures.                              |
 | 8 | `src/kmeansForNonStarShaped.py`        | Stand-alone k-means clustering report on non-star signatures.                                                         |
-| 9 | `src/knn_EuclideanNonStar_5NN.py`      | 5-NN retrieval for the same 10 fixed query IDs used in the paper (see `data/experiment_ids.json`).                    |
+| 9 | `src/knn_EuclideanNonStar_5NN.py`      | 5-NN retrieval for a fixed list of query IDs (see `data/experiment_ids.json`).                                        |
 
 ---
 
@@ -107,7 +101,7 @@ dissimilarity that also works for non-star objects.
 
 ```bash
 python3 -m venv venv && source venv/bin/activate
-pip install numpy scipy opencv-python Pillow shapely matplotlib scikit-learn
+pip install -r requirements.txt
 
 # 1) Preprocess (skip step 1 if data/ExtractedFromGifs/ is already there)
 python3 src/extractor.py
@@ -121,21 +115,3 @@ python3 src/euclideanOfNonStarSignatures.py
 # 3) 5-NN retrieval (writes reports/knn_EuclideanNonStar/<idx>/)
 python3 src/knn_EuclideanNonStar_5NN.py
 ```
-
----
-
-## Citation
-
-If you build on this code, please cite the paper:
-
-```
-@unpublished{shafieasl2025rotation,
-  author  = {Hamid Shafieasl and Jeff M. Phillips},
-  title   = {Rotation-Invariant Vectorized Shape Representations},
-  year    = {2025},
-  note    = {Preprint}
-}
-```
-
-The SQUID dataset is from Mokhtarian, Abbasi and Kittler (Curvature Scale
-Space) and Nasreddine et al.; please cite the original sources as well.
