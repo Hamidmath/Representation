@@ -115,3 +115,23 @@ python3 src/euclideanOfNonStarSignatures.py
 # 3) 5-NN retrieval (writes reports/knn_EuclideanNonStar/<idx>/)
 python3 src/knn_EuclideanNonStar_5NN.py
 ```
+
+---
+
+## Paper
+
+This code accompanies the paper *Rotation-Invariant Vectorized Shape
+Representations* by Hamid Shafieasl and Jeff M. Phillips, available on arXiv:
+[https://arxiv.org/abs/2605.27498](https://arxiv.org/abs/2605.27498).
+
+```bibtex
+@misc{shafieasl2025rotation,
+  author        = {Hamid Shafieasl and Jeff M. Phillips},
+  title         = {Rotation-Invariant Vectorized Shape Representations},
+  year          = {2025},
+  eprint        = {2605.27498},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CG},
+  url           = {https://arxiv.org/abs/2605.27498}
+}
+```
