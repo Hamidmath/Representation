@@ -175,3 +175,23 @@ python3 figures/shape_table.py
 <p align="center">
   <img src="docs/roc_demo.png" alt="RoC illustration on kk53" width="640">
 </p>
+
+---
+
+## Paper
+
+This code accompanies the paper *Rotation-Invariant Vectorized Shape
+Representations* by Hamid Shafieasl and Jeff M. Phillips, available on arXiv:
+[https://arxiv.org/abs/2605.27498](https://arxiv.org/abs/2605.27498).
+
+```bibtex
+@misc{shafieasl2025rotation,
+  author        = {Hamid Shafieasl and Jeff M. Phillips},
+  title         = {Rotation-Invariant Vectorized Shape Representations},
+  year          = {2025},
+  eprint        = {2605.27498},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CG},
+  url           = {https://arxiv.org/abs/2605.27498}
+}
+```
